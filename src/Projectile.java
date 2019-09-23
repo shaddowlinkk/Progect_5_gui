@@ -1,14 +1,17 @@
 import javax.swing.*;
+import java.awt.Color;
+
 public class Projectile extends JButton {
     private int x, y,dx,dy,_width,_height,count;
     private BoundingBox hitBox;
-    public Projectile(int width, int height, int _x, int _y){
+    public Projectile( int _x, int _y,int width, int height){
         x = _x;
         y = _y;
         _width=width;
         _height=height;
         setLocation(x,y);
         setSize(width, height);
+        setBackground(Color.cyan);
         hitBox = new BoundingBox(x,y,_width,_height);
     }
     public void setDx(int dx) {

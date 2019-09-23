@@ -22,7 +22,7 @@ public class Board implements KeyListener{
     private int[] rDoor;
     private BoundingBox[] door={new BoundingBox(215,415, 60,20),new BoundingBox(475,180, 20,60),new BoundingBox(215,0, 60,20),new BoundingBox(0,180, 20,60)};
     private ArrayList<Mob_2> mobs = new ArrayList();
-    private ArrayList<Projectile> shoots = new ArrayList<>();
+    private ArrayList<Projectile[]> shots = new ArrayList<>();
     private static final int STEPS = 500;
     private static final int DELAY = 20;
 
@@ -137,11 +137,12 @@ public class Board implements KeyListener{
             System.out.println("press");
             e.consume();
         }else if (key==KeyEvent.VK_F2){
-            activateSpikes=false;
-            spikeDraw(0);
+            ProjectileDraw();
+        }else if (key==KeyEvent.VK_F3){
+            ProjectileRemove();
         }else if(key==KeyEvent.VK_F1){
-            activateSpikes =true;
-            spikeDraw(0);
+            System.out.println("test");
+            ProjectilesMovmentHeaneler();
         }else if(key!=KeyEvent.VK_SPACE){
             //System.out.println("no space");
             player.keyPressed(e);
@@ -171,7 +172,7 @@ public class Board implements KeyListener{
         Random r = new Random();
         roomcleared =false;
        // int mobMumber = r.nextInt(5);
-        int mobMumber = 2;
+        int mobMumber = 1;
         for (int i =0;i<mobMumber;i++){
             mobCreate(r.nextInt((FRAMEWIDTH-50)),r.nextInt(((FRAMEHEIGHT - actionPanel.getHeight())-50)));
         }
@@ -205,8 +206,8 @@ public class Board implements KeyListener{
             }
             PlayerCollectionDerection();
             MobAttackColitionDetection();
-            spikeControler();
-            MobMoveHandeler();
+            //spikeControler();
+            //MobMoveHandeler();
             PlayerMovmentHeadeler();
             playArea.paintImmediately(playArea.getVisibleRect());
 
@@ -214,7 +215,6 @@ public class Board implements KeyListener{
     }
 
     private void PorjectileControler(){
-
     }
 
     private void spikeControler(){
@@ -299,6 +299,15 @@ public class Board implements KeyListener{
      * makes that plaer move
      */
     private void ProjectilesMovmentHeaneler(){
+        for (int i =0;i<mobs.size();i++){
+        }
+        shots.add(mobs.get(0).getProjectiles());
+        for (Projectile[] group:shots) {
+            for (Projectile shot :group) {
+                shot.move();
+            }
+
+        }
 
     }
     private void PlayerMovmentHeadeler(){
@@ -355,6 +364,26 @@ public class Board implements KeyListener{
             playArea.remove(mobs.get(i).spikes()[2]);
             playArea.remove(mobs.get(i).spikes()[3]);
         }
+    }
+    private void ProjectileDraw(){
+        for (int i =0;i<mobs.size();i++){
+            for (Projectile[] group:shots) {
+                for (Projectile shot :group) {
+                    playArea.add(shot);
+                }
+            }
+        }
+
+    }
+    private void ProjectileRemove(){
+        for (int i =0;i<mobs.size();i++){
+            for (Projectile[] group:shots) {
+                for (Projectile shot :group) {
+                    playArea.remove(shot);
+                }
+            }
+        }
+
     }
 
 
