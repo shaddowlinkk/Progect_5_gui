@@ -14,6 +14,7 @@ public class Projectile extends JButton {
         setBackground(Color.cyan);
         hitBox = new BoundingBox(x,y,_width,_height);
     }
+    public Projectile(){}
     public void setDx(int dx) {
         this.dx = dx;
     }

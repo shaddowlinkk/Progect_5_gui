@@ -1,6 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.util.Arrays;
 
 /**
  * Created by nathan on 4/24/2017.
@@ -11,7 +12,6 @@ public class Mob_2 extends JButton{
     private MobAI AI = new MobAI();
     private boolean stoped,aboutMove;
     private BoundingBox hitBox;
-    private Projectile[] proj = new Projectile[4];
 
 
     public Mob_2(ImageIcon s, int width, int height, int _x, int _y){
@@ -31,10 +31,7 @@ public class Mob_2 extends JButton{
         spikes[2]= new BoundingBox((x-20),y+(_height/2),20,5);
         spikes[3]= new BoundingBox((x+_width),y+(_height/2),20,5);
         // projectiles
-        proj[0]= new Projectile((x+(_width/2)),y-5,5,5);
-        proj[1]= new Projectile((x+(_width/2)),y+_height,5,5);
-        proj[2]= new Projectile((x-5),y+(_height/2),5,5);
-        proj[3]= new Projectile((x+_width),y+(_height/2),5,5);
+
 
         hitBox= new BoundingBox(x,y,_width,_height);
 
@@ -105,6 +102,15 @@ public class Mob_2 extends JButton{
         return aboutMove;
     }
     public Projectile[] getProjectiles(){
+        Projectile[] proj = new Projectile[4];
+        proj[0]= new Projectile((x+(_width/2)),y-5,5,5);
+        proj[0].setDy(-1);
+        proj[1]= new Projectile((x+(_width/2)),y+_height,5,5);
+        proj[1].setDy(1);
+        proj[2]= new Projectile((x-5),y+(_height/2),5,5);
+        proj[2].setDx(-1);
+        proj[3]= new Projectile((x+_width),y+(_height/2),5,5);
+        proj[3].setDx(1);
         return proj;
     }
     public void updateSpike(){

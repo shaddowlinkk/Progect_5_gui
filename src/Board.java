@@ -5,6 +5,7 @@
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.event.KeyListener;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
@@ -19,6 +20,7 @@ public class Board implements KeyListener{
     private Timer playerTimer;
     private JLabel scoreLabal;
     private int score=0;
+    private int debug=0;
     private int[] rDoor;
     private BoundingBox[] door={new BoundingBox(215,415, 60,20),new BoundingBox(475,180, 20,60),new BoundingBox(215,0, 60,20),new BoundingBox(0,180, 20,60)};
     private ArrayList<Mob_2> mobs = new ArrayList();
@@ -140,8 +142,9 @@ public class Board implements KeyListener{
             ProjectileDraw();
         }else if (key==KeyEvent.VK_F3){
             ProjectileRemove();
+        }else if (key==KeyEvent.VK_F4){
+            ProjectileControler();
         }else if(key==KeyEvent.VK_F1){
-            System.out.println("test");
             ProjectilesMovmentHeaneler();
         }else if(key!=KeyEvent.VK_SPACE){
             //System.out.println("no space");
@@ -214,7 +217,10 @@ public class Board implements KeyListener{
         }
     }
 
-    private void PorjectileControler(){
+    private void ProjectileControler(){
+        shots.add(mobs.get(0).getProjectiles());
+        debug++;
+
     }
 
     private void spikeControler(){
@@ -299,9 +305,6 @@ public class Board implements KeyListener{
      * makes that plaer move
      */
     private void ProjectilesMovmentHeaneler(){
-        for (int i =0;i<mobs.size();i++){
-        }
-        shots.add(mobs.get(0).getProjectiles());
         for (Projectile[] group:shots) {
             for (Projectile shot :group) {
                 shot.move();
@@ -366,14 +369,11 @@ public class Board implements KeyListener{
         }
     }
     private void ProjectileDraw(){
-        for (int i =0;i<mobs.size();i++){
             for (Projectile[] group:shots) {
                 for (Projectile shot :group) {
                     playArea.add(shot);
                 }
             }
-        }
-
     }
     private void ProjectileRemove(){
         for (int i =0;i<mobs.size();i++){
