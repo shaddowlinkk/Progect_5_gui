@@ -1,4 +1,4 @@
-/**
+/*
  * Created by nathan on 4/24/2017.
  * TODO change spikes to projectiles
  */
@@ -22,6 +22,7 @@ public class Board implements KeyListener{
     private int[] rDoor;
     private BoundingBox[] door={new BoundingBox(215,415, 60,20),new BoundingBox(475,180, 20,60),new BoundingBox(215,0, 60,20),new BoundingBox(0,180, 20,60)};
     private ArrayList<Mob_2> mobs = new ArrayList();
+    private ArrayList<Projectile> shoots = new ArrayList<>();
     private static final int STEPS = 500;
     private static final int DELAY = 20;
 
@@ -212,6 +213,10 @@ public class Board implements KeyListener{
         }
     }
 
+    private void PorjectileControler(){
+
+    }
+
     private void spikeControler(){
         if(moving&& mobs.get(0).isStoped()){
             SpikeUpdate();
@@ -252,6 +257,9 @@ public class Board implements KeyListener{
     /**
      * ueds for detection attacks
      */
+    private void ProjectileColitionDetectio(){
+
+    }
     private void MobAttackColitionDetection(){
         for(int i =0;i<mobs.size();i++) {
                 if (!(playeerAttack == null)) {
@@ -273,11 +281,9 @@ public class Board implements KeyListener{
                         if (player.hitCheck((mobs.get(i).spikes())[j].getX(), (mobs.get(i).spikes())[j].getY(), (mobs.get(i).spikes())[j].getHeight(), (mobs.get(i).spikes())[j].getHeight())) {
                             playerTimer.stop();
                             System.out.println("test");
-                            for (int h = 0; i < mobs.size(); i++) {
                                 activateSpikes=false;
                                 spikeDraw(i);
                                 playArea.remove(mobs.get((i)));
-                            }
                             removeDoor();
                             playArea.setBackground(Color.black);
                             break;
@@ -292,6 +298,9 @@ public class Board implements KeyListener{
     /**
      * makes that plaer move
      */
+    private void ProjectilesMovmentHeaneler(){
+
+    }
     private void PlayerMovmentHeadeler(){
         if (boundY()) {
             player.setDy((0 - 2*(player.getDy())));
@@ -304,16 +313,6 @@ public class Board implements KeyListener{
         else player.move();
     }
 
-    /**
-     * Handels the movment of mobs
-     */
-    private void spikeRetract(){
-        for(int i=0;i<mobs.size();i++) {
-            if(mobs.get(i).isAboutMove()){
-                remspikes(i);
-            }
-        }
-    }
     private void MobMoveHandeler(){
         if(!moving && !mobs.get(0).isStoped()){
             moving=true;
@@ -358,18 +357,8 @@ public class Board implements KeyListener{
         }
     }
 
-    /**
-     * this is use to remove spikes at the end
-     * @param i the moob to remove the spikes from
-     */
-    private void remspikes(int i){
-        playArea.remove(mobs.get(i).spikes()[0]);
-        playArea.remove(mobs.get(i).spikes()[1]);
-        playArea.remove(mobs.get(i).spikes()[2]);
-        playArea.remove(mobs.get(i).spikes()[3]);
-        uptodate=false;
-        playArea.paintImmediately(playArea.getVisibleRect());
-    }
+
+
     private void SpikeUpdate(){
         for(int i=0;i<mobs.size();i++) {
                 mobs.get(i).updateSpike();

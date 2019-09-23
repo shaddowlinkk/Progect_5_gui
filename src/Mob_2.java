@@ -12,6 +12,7 @@ public class Mob_2 extends JButton{
     private boolean stoped,aboutMove;
     private BoundingBox hitBox;
 
+
     public Mob_2(ImageIcon s, int width, int height, int _x, int _y){
 
         super(s);
@@ -95,12 +96,21 @@ public class Mob_2 extends JButton{
     public boolean isAboutMove(){
         return aboutMove;
     }
+    public Projectile[] getProjectiles(){
+        Projectile[] proj = new Projectile[4];
+        proj[0]= new Projectile((x+(_width/2)),y-20,5,20);
+        proj[1]= new Projectile((x+(_width/2)),y+_height,5,20);
+        proj[2]= new Projectile((x-20),y+(_height/2),20,5);
+        proj[3]= new Projectile((x+_width),y+(_height/2),20,5);
+        return proj;
+    }
     public void updateSpike(){
         spikes[0]= new BoundingBox((x+(_width/2)),y-20,5,20);
         spikes[1]= new BoundingBox((x+(_width/2)),y+_height,5,20);
         spikes[2]= new BoundingBox((x-20),y+(_height/2),20,5);
         spikes[3]= new BoundingBox((x+_width),y+(_height/2),20,5);
     }
+
     public void keyPressed(KeyEvent e) {
 
         int key = e.getKeyCode();
