@@ -5,7 +5,6 @@
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.event.KeyListener;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
@@ -145,7 +144,7 @@ public class Board implements KeyListener{
         }else if (key==KeyEvent.VK_F4){
             ProjectileControler();
         }else if(key==KeyEvent.VK_F1){
-            ProjectilesMovmentHeaneler();
+            ProjectilesMovmentHeadeler();
         }else if(key!=KeyEvent.VK_SPACE){
             //System.out.println("no space");
             player.keyPressed(e);
@@ -210,7 +209,9 @@ public class Board implements KeyListener{
             PlayerCollectionDerection();
             MobAttackColitionDetection();
             //spikeControler();
-            //MobMoveHandeler();
+            //ProjectileControler();
+            //ProjectilesMovmentHeadeler();
+            MobMovmentHandeler();
             PlayerMovmentHeadeler();
             playArea.paintImmediately(playArea.getVisibleRect());
 
@@ -218,8 +219,11 @@ public class Board implements KeyListener{
     }
 
     private void ProjectileControler(){
-        shots.add(mobs.get(0).getProjectiles());
-        debug++;
+        if (stopcount==1){
+            shots.add(mobs.get(0).getProjectiles());
+            ProjectileDraw();
+        }
+
 
     }
 
@@ -304,7 +308,7 @@ public class Board implements KeyListener{
     /**
      * makes that plaer move
      */
-    private void ProjectilesMovmentHeaneler(){
+    private void ProjectilesMovmentHeadeler(){
         for (Projectile[] group:shots) {
             for (Projectile shot :group) {
                 shot.move();
@@ -325,7 +329,7 @@ public class Board implements KeyListener{
         else player.move();
     }
 
-    private void MobMoveHandeler(){
+    private void MobMovmentHandeler(){
         if(!moving && !mobs.get(0).isStoped()){
             moving=true;
         }
