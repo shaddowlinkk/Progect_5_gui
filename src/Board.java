@@ -218,24 +218,26 @@ public class Board implements KeyListener{
     }
 
     private void spikeControler(){
-        if(moving&& mobs.get(0).isStoped()){
-            SpikeUpdate();
-            moving=false;
-            stopcount++;
+        if(!mobs.isEmpty()) {
+            if (moving && mobs.get(0).isStoped()) {
+                SpikeUpdate();
+                moving = false;
+                stopcount++;
+            }
+            if (stopcount == 2 && mobs.get(0).isStoped()) {
+                activateSpikes = true;
+                for (int i = 0; i < mobs.size(); i++) {
+                    spikeDraw(i);
+                }
+            }
+            if (activateSpikes == true && mobs.get(0).isAboutMove()) {
+                activateSpikes = false;
+                stopcount = 0;
+                for (int i = 0; i < mobs.size(); i++) {
+                    spikeDraw(i);
+                }
+            }
         }
-            if (stopcount==2 && mobs.get(0).isStoped()){
-                activateSpikes=true;
-                for(int i =0;i<mobs.size();i++) {
-                    spikeDraw(i);
-                }
-            }
-            if(activateSpikes==true && mobs.get(0).isAboutMove()){
-                activateSpikes=false;
-                stopcount=0;
-                for(int i =0;i<mobs.size();i++) {
-                    spikeDraw(i);
-                }
-            }
 
 
     }
