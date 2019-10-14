@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
 import javax.swing.*;
-
+//TODO clean up extra arrays in shots
 public class Board implements KeyListener{
     private Player player;
     private ImageIcon playerImage;
@@ -141,9 +141,10 @@ public class Board implements KeyListener{
         }else if (key==KeyEvent.VK_F2){
             ProjectileDraw();
         }else if (key==KeyEvent.VK_F3){
-            ProjectileRemove();
+            shots.add(mobs.get(0).getProjectiles());
+            ProjectileDraw();
         }else if (key==KeyEvent.VK_F4){
-            ProjectileControler();
+            System.out.println();
         }else if(key==KeyEvent.VK_F1){
             ProjectilesMovmentHeadeler();
         }else if(key!=KeyEvent.VK_SPACE){
@@ -208,6 +209,7 @@ public class Board implements KeyListener{
                 roomcleared =true;
             }
             PlayerColitionDetection();
+            ProjectileColitionDetection();
             MobAttackColitionDetection();
             spikeControler();
             ProjectileControler();
@@ -221,8 +223,7 @@ public class Board implements KeyListener{
     }
 
     private void ProjectileControler(){
-        System.out.println(launchCount);
-        if (stopcount==1 && launchCount >= 50){
+        if (stopcount==1 && launchCount >= 75){
             shots.add(mobs.get(0).getProjectiles());
             ProjectileDraw();
             launchCount=0;
@@ -267,8 +268,14 @@ public class Board implements KeyListener{
     /**
      * ueds for detection attacks
      */
-    private void ProjectileColitionDetectio(){
-
+    private void ProjectileColitionDetection() {
+        for (Projectile[] s : shots) {
+            for (Projectile p : s) {
+                if(boundY(p.getY(),p.getHeight())||boundX(p.getX(),p.getWidth())){
+                    playArea.remove(p);
+                }
+            }
+        }
     }
     private void MobAttackColitionDetection(){
         for(int i =0;i<mobs.size();i++) {
@@ -289,21 +296,42 @@ public class Board implements KeyListener{
                 for (int j = 0; j < (mobs.get(i).spikes()).length; j++) {
                     if ( activateSpikes == true){
                         if (player.hitCheck((mobs.get(i).spikes())[j].getX(), (mobs.get(i).spikes())[j].getY(), (mobs.get(i).spikes())[j].getHeight(), (mobs.get(i).spikes())[j].getHeight())) {
-                            playerTimer.stop();
-                                activateSpikes=false;
-                                spikeDraw(i);
-                                playArea.remove(mobs.get((i)));
-                            removeDoor();
-                            playArea.setBackground(Color.black);
+                            EndGame();
                             break;
 
                         }
                     }
                 }
         }
+        for (Projectile[] s : shots ) {
+            for(Projectile p:s){
+                if(player.hitCheck(p.getX(),p.getY(),p.getWidth(),p.getHeight())){
+                    EndGame();
+                    break;
+                }
+            }
+
+        }
 
     }
-
+    private void EndGame(){
+        playerTimer.stop();
+        activateSpikes=false;
+        for(int h =0;h<mobs.size();h++) {
+            spikeDraw(h);
+            playArea.remove(mobs.get((h)));
+        }
+        removeDoor();
+        ProjectileRemove();
+        playArea.setBackground(Color.black);
+    }
+    private void Cleanup(){
+        for (Projectile[] group:shots) {
+        if(group.length==0){
+            System.out.println("found");
+        }
+        }
+    }
     /**
      * makes that plaer move
      */
@@ -388,7 +416,6 @@ public class Board implements KeyListener{
         }
 
     }
-
 
 
     private void SpikeUpdate(){
