@@ -26,6 +26,7 @@ public class Board implements KeyListener{
     private ArrayList<Projectile[]> shots = new ArrayList<>();
     private static final int STEPS = 500;
     private static final int DELAY = 20;
+    private int launchCount= 0;
 
     private boolean activateSpikes=false;
     private int stopcount=0;
@@ -186,7 +187,7 @@ public class Board implements KeyListener{
         mobs.add( new Mob(new ImageIcon("flame.gif"),34,49,x,y));
         mobsBox.add(new BoundingBox (x,y,34,49));
         playArea.add(mobs.get(mobs.size()-1));
-        // playArea.add(mobsBox.get(0));
+        playArea.add(mobsBox.get(0));
     }*/
     private void mobCreate(int x,int y){
         mobs.add( new Mob_2(new ImageIcon("flame.gif"),34,49,x,y));
@@ -206,25 +207,26 @@ public class Board implements KeyListener{
             if(mobs.isEmpty()){
                 roomcleared =true;
             }
-            PlayerCollectionDerection();
+            PlayerColitionDetection();
             MobAttackColitionDetection();
-            //spikeControler();
-            //ProjectileControler();
-            //ProjectilesMovmentHeadeler();
+            spikeControler();
+            ProjectileControler();
+            ProjectilesMovmentHeadeler();
             MobMovmentHandeler();
             PlayerMovmentHeadeler();
             playArea.paintImmediately(playArea.getVisibleRect());
+            launchCount++;
 
         }
     }
 
     private void ProjectileControler(){
-        if (stopcount==1){
+        System.out.println(launchCount);
+        if (stopcount==1 && launchCount >= 50){
             shots.add(mobs.get(0).getProjectiles());
             ProjectileDraw();
+            launchCount=0;
         }
-
-
     }
 
     private void spikeControler(){
@@ -246,8 +248,6 @@ public class Board implements KeyListener{
                     spikeDraw(i);
                 }
             }
-
-
     }
     private void DoorColitionDetection(){
         for (int i=0;i<door.length;i++){
@@ -284,13 +284,12 @@ public class Board implements KeyListener{
             }
     }
 
-    private void PlayerCollectionDerection(){
+    private void PlayerColitionDetection(){
         for(int i =0;i<mobs.size();i++) {
                 for (int j = 0; j < (mobs.get(i).spikes()).length; j++) {
                     if ( activateSpikes == true){
                         if (player.hitCheck((mobs.get(i).spikes())[j].getX(), (mobs.get(i).spikes())[j].getY(), (mobs.get(i).spikes())[j].getHeight(), (mobs.get(i).spikes())[j].getHeight())) {
                             playerTimer.stop();
-                            System.out.println("test");
                                 activateSpikes=false;
                                 spikeDraw(i);
                                 playArea.remove(mobs.get((i)));
