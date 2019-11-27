@@ -2,8 +2,6 @@
  * Created by sip26 on 4/24/2017.
  */
 
-import com.sun.org.apache.xpath.internal.functions.FuncFalse;
-
 import java.awt.Color;
 import javax.swing.*;
 
