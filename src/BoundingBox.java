@@ -2,8 +2,6 @@
  * Created by sip26 on 4/24/2017.
  */
 
-import com.sun.org.apache.xpath.internal.functions.FuncFalse;
-
 import java.awt.Color;
 import javax.swing.*;
 
@@ -33,7 +31,7 @@ public class BoundingBox extends JButton{
         y2=y+height;
         setLocation(x,y);
         setSize(width, height);
-        setForeground(Color.RED);
+        //setForeground(Color.RED);
         setBackground(Color.BLUE);
         //setEnabled(false);
     }

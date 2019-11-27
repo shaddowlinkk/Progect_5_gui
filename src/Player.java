@@ -13,7 +13,7 @@ public class Player extends JButton{
         y = 150;
         setLocation(x,y);
         setSize(34, 49);
-        setForeground(Color.RED);
+        //setForeground(Color.RED);
         setBackground(Color.pink);
        // setEnabled(false);
 

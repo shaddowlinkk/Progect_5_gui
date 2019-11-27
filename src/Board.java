@@ -72,8 +72,6 @@ public class Board implements KeyListener{
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         playerImage = new ImageIcon("Little_flame_character.gif");
-        player = new Player(playerImage);
-
         playerTimer = new Timer(10, new TimerListener());
         playerTimer.start();
 
@@ -357,7 +355,7 @@ public class Board implements KeyListener{
     }
 
     private void MobMovmentHandeler(){
-        if(!moving && !mobs.get(0).isStoped()){
+        if(!moving && !mobs.isEmpty() && !mobs.get(0).isStoped()){
             moving=true;
         }
         for(int i=0;i<mobs.size();i++){
